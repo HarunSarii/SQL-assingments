@@ -1,0 +1,362 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset162 Calibri;}{\f1\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang1055 LAST LESSON\par
+\f1\lang31 /*\par
+CREATE TABLE leaves(\par
+id INT,\par
+EmployeeId INT,\par
+StartDate DATE,\par
+EndDate DATE\par
+);\par
+*/\par
+/*DROP TABLE leaves;*/\par
+/*\par
+INSERT INTO leaves \par
+(id,EmployeeId,StartDate,EndDate)\par
+VALUES\par
+(1,2,'2021-02-01','2021-02-15');\par
+SELECT * FROM leaves\par
+*/\par
+/*\par
+INSERT INTO leaves \par
+(id,EmployeeId,StartDate,EndDate)\par
+VALUES\par
+(1,22,'2021-02-01','2021-02-15');\par
+*/\par
+/*\par
+SELECT * FROM leaves l\par
+LEFT JOIN employees e on e.EmployeeId=l.EmployeeId\par
+*/\par
+/*\par
+INSERT INTO albums\par
+(Title,ArtistId)\par
+VALUES\par
+('My new album-AUTOINCREMENT-NEXT',100)\par
+*/\par
+/*\par
+DELETE FROM albums \par
+WHERE AlbumId>=348\par
+*/\par
+/*\par
+DROP TABLE leaves;\par
+*/\par
+/*\par
+CREATE TABLE leaves(\par
+id INTEGER, --INT VS. INTEGER (GOOGLE)\par
+EmployeeId INT NOT NULL,\par
+StartDate DATE NOT NULL,\par
+EndDate DATE NOT NULL,\par
+PRIMARY KEY ("id" AUTOINCREMENT),\par
+FOREIGN KEY ("EmployeeId") REFERENCES employees("EmployeeId")\par
+);\par
+*/\par
+/*\par
+INSERT INTO leaves \par
+(EmployeeId,StartDate,EndDate)\par
+VALUES\par
+(4,'2021-02-11','2021-02-17');\par
+SELECT * FROM leaves\par
+*/\par
+/*\par
+ALTER TABLE leaves RENAME TO  employee_leaves;\par
+*/\par
+/*\par
+ALTER TABLE employee_leaves \par
+ADD leave_type char(30)\par
+INSERT INTO employee_leaves \par
+(EmployeeId,StartDate,EndDate)\par
+VALUES\par
+(5,'2021-02-11','2021-02-17');\par
+SELECT * FROM employee_leaves\par
+*/\par
+/*\par
+CREATE TABLE leave_types \par
+(id INTEGER PRIMARY KEY AUTOINCREMENT,\par
+leave_name char(30)\par
+)\par
+*/\par
+/*\par
+INSERT INTO leave_types (leave_name)\par
+VALUES\par
+('Annual Leave'),\par
+('Sick Leave'),\par
+('Marriage Leave')\par
+select * from employee_leaves\par
+*/\par
+/*\par
+ALTER TABLE employee_leaves\par
+ALTER COLUMN leave_type INTEGER\par
+*/\par
+/*\par
+UPDATE employee_leaves \par
+SET leave_type = 1\par
+*/\par
+--drop table employee_leaves\par
+/*\par
+CREATE TABLE "employee_leaves" (\par
+\tab "id"\tab INTEGER,\par
+\tab "EmployeeId"\tab INT NOT NULL,\par
+\tab "StartDate"\tab DATE NOT NULL,\par
+\tab "EndDate"\tab DATE NOT NULL,\par
+\tab "leave_type"\tab INTEGER NOT NULL,\par
+\tab FOREIGN KEY("EmployeeId") REFERENCES "employees"("EmployeeId"),\par
+\tab FOREIGN KEY("leave_type") REFERENCES "leave_types"("id"),\par
+\tab PRIMARY KEY("id" AUTOINCREMENT)\par
+);\par
+select * from employee_leaves\par
+*/\par
+/* These statements are not working in SQLite but you can use it in other RDBMS\par
+ALTER TABLE employee_leaves\par
+DROP leave_type\par
+ALTER TABLE employee_leaves\par
+MODIFY COLUMN leave_type TEXT\par
+*/\par
+/*\par
+UPDATE leave_types\par
+SET leave_name='Updated Annual Leave'\par
+WHERE id=1\par
+select * from leave_types\par
+UPDATE leave_types\par
+SET leave_name='Updated Sick Leave'\par
+WHERE leave_name='Sick Leave'\par
+*/\par
+select * from employee_leaves\par
+update employee_leaves\par
+set StartDate='2021-01-15', --10 days\par
+\tab EndDate='2021-01-25'\tab --10 days\par
+where id=1\par
+update employee_leaves\par
+set StartDate=DATE(StartDate,'+10 days'), --10 days\par
+\tab EndDate=DATE(EndDate,'+7 days')\tab --5 days\par
+where id=1\par
+\f0\lang1055 ---------------------------------------------------------------------------------------------\f1\lang31\par
+--select count(*) from tracks --3503 records\par
+--select count(composer) from tracks --2525 record, almost 1000 records are NULL in composer COLUMN\par
+--select name, Milliseconds as msec from tracks tr1\par
+--SELECT COUNT(*) FROM invoices -- 412\par
+--select * from tracks\par
+--SELECT COUNT(DISTINCT AlbumId) FROM tracks\par
+--SELECT count(*) FROM albums\par
+--select count (DISTINCT Composer) from tracks\par
+--SELECT name,MIN(milliseconds) from tracks\par
+--select name,max(milliseconds) from tracks\par
+--SELECT sum(Total) FROM invoices --2328.6\par
+--select DISTINCT strftime('%Y', InvoiceDate) from invoices\par
+--SELECT AVG(Milliseconds) FROM tracks -- 393599.212103911\par
+--SELECT * FROM tracks WHERE Milliseconds > 393599.212103911\par
+/*\par
+SELECT Composer, Count(*)\par
+FROM tracks\par
+WHERE Composer IS NOT NULL\par
+GROUP BY Composer\par
+*/\par
+/*\par
+SELECT Country,City, count(*) as NumberofCustomers\par
+FROM customers\par
+GROUP BY Country,City\par
+*/\par
+/*\par
+SELECT AlbumId,MIN(Milliseconds) AS duration\par
+FROM tracks\par
+GROUP BY AlbumId\par
+ORDER BY duration DESC\par
+*/\par
+/*\par
+SELECT BillingCountry, SUM(Total) AS TotalAmount\par
+from invoices\par
+GROUP BY BillingCountry\par
+ORDER BY TotalAmount DESC\par
+*/\par
+/*\par
+select tracks.name as TrackName, genres.Name as GenreName\par
+from tracks\par
+JOIN genres ON tracks.GenreId=genres.GenreId\par
+*/\par
+/*\par
+select tr.name as TrackName, gn.Name as GenreName\par
+from tracks tr\par
+JOIN genres gn ON tr.GenreId=gn.GenreId\par
+*/\par
+/*\par
+SELECT i.InvoiceId, c.FirstName, c.LastName\par
+FROM invoices i\par
+JOIN customers c on i.CustomerId=c.CustomerId ;\par
+*/\par
+/*\par
+select ar.Name as ArtistName, al.Title as AlbumTitle\par
+from artists ar\par
+LEFT JOIN albums al ON ar.ArtistId=al.ArtistId\par
+*/\par
+SELECT inv.BillingCountry, ii.TrackId, tr.name, al.Title, ar.name\par
+FROM invoices inv\par
+INNER JOIN  invoice_items ii on inv.InvoiceId=ii.InvoiceId\par
+INNER JOIN tracks tr on tr.TrackId=ii.TrackId\par
+INNER JOIN albums al on al.AlbumId=tr.AlbumId\par
+INNER JOIN artists ar on ar.ArtistId=al.ArtistId\par
+WHERE inv.BillingCountry='Germany'\par
+\f0\lang1055 -------------------------------------------------------------------------------------------------------\f1\lang31\par
+\par
+\par
+/*\par
+SELECT \tab TrackId,\par
+\tab\tab name as TrackName,\par
+\tab\tab AlbumId\par
+FROM tracks\par
+WHERE AlbumId > (SELECT AlbumId\par
+\tab\tab\tab\tab FROM albums\par
+\tab\tab\tab\tab where AlbumId =1000\par
+\tab\tab\tab\tab ORDER BY AlbumId DESC)\par
+*/\par
+/*\par
+SELECT \tab tr.TrackId,\par
+\tab\tab tr.name as TrackName,\par
+\tab\tab al.Title as AlbumTitle\par
+FROM tracks tr\par
+INNER JOIN albums al on tr.AlbumId=al.AlbumId\par
+WHERE al.Title='Faceless'\par
+*/\par
+/*\par
+SELECT AlbumId \par
+FROM albums\par
+WHERE Title IN ('Faceless', 'Let There Be Rock')\par
+*/\par
+/*\par
+SELECT \tab TrackId,\par
+\tab\tab name as trackName, \par
+\tab\tab AlbumId\par
+FROM tracks \par
+WHERE AlbumId IN \tab (SELECT AlbumId \par
+\tab\tab\tab\tab\tab FROM albums\par
+\tab\tab\tab\tab\tab WHERE Title IN ('Faceless', 'Let There Be Rock'))\par
+*/\par
+/*\par
+SELECT \tab tr.TrackId,\par
+\tab\tab tr.name as trackName, \par
+\tab\tab al.AlbumId\par
+FROM tracks tr\par
+INNER JOIN albums al on tr.AlbumId=al.AlbumId\par
+WHERE Title IN ('Faceless', 'Let There Be Rock')\par
+*/\par
+/*\par
+CREATE TABLE vacation_plan (\par
+place_id INT ,\par
+country TEXT, --VARCHAR(50)\par
+hotel_name TEXT,\par
+EmployeeId INT,\par
+vacation_lenght INT,\par
+budget DECIMAL --\par
+)\par
+*/\par
+SELECT \tab --tr.TrackId,\par
+\tab\tab --tr.Name as TrackName,\par
+\tab\tab --al.Title as AlbumTitle,\par
+\tab\tab ar.Name as ArtistName,\par
+\tab\tab inv.BillingCountry, \par
+\tab\tab SUM(Quantity) AS TotalQuantity\par
+FROM tracks tr\par
+INNER JOIN albums al on tr.AlbumId=al.AlbumId\par
+INNER JOIN artists ar on ar.ArtistId=al.ArtistId\par
+INNER JOIN invoice_items ii on ii.TrackId=tr.TrackId\par
+INNER JOIN invoices inv on inv.InvoiceId=ii.InvoiceId \par
+WHERE inv.BillingCountry='Germany'\par
+--GROUP BY tr.TrackId,tr.Name,al.Title,inv.BillingCountry\par
+GROUP BY ar.Name\par
+order by TotalQuantity desc\par
+\par
+\f0\lang1055 -----------------------------------------------------------------------\par
+/*CC-11 Assigment Solution*/\par
+/*1. Write a query that displays InvoiceId, CustomerId and total dollar amount for each invoice, sorted first by CustomerId \par
+(in ascending order), and then by total dollar amount (in descending order).*/\par
+/*\par
+SELECT \tab InvoiceId, \par
+\tab\tab CustomerId, \par
+\tab\tab Total as TotalAmount \par
+FROM invoices \par
+ORDER by CustomerID, TotalAmount DESC \par
+*/\par
+/*2. Write a query that displays InvoiceId, CustomerId and total dollar amount for each invoice, \par
+but this time sorted first by total dollar amount (in descending order), and then by CustomerId (in ascending order).\par
+*/\par
+/*\par
+SELECT \tab InvoiceId, \par
+\tab\tab CustomerId, \par
+\tab\tab Total as TotalAmount \par
+FROM invoices \par
+ORDER by TotalAmount DESC,CustomerID\par
+*/\par
+/*4.Write a query to pull the first 10 rows and all columns from the invoices table that have a dollar \par
+amount of total greater than or equal to 10.*/\par
+/*\par
+SELECT * FROM invoices WHERE Total >= 10 LIMIT 10\par
+*/\par
+/*5.Write a query to pull the first 5 rows and all columns from the invoices table that have a dollar amount of total less than 10.\par
+SELECT * FROM invoices WHERE Total < 10 LIMIT 5\par
+*/\par
+/*6.Find all track names that start with 'B' and end with 's'.\par
+SELECT name FROM tracks WHERE name like 'B%s' --  WHERE name like 'B%' AND name like '%s'\par
+*/\par
+/*7. Use the invoices table to find all information regarding invoices whose billing address is USA or Germany or \par
+Norway or Canada and invoice date is at any point in 2010, sorted from newest to oldest.\par
+SELECT * FROM invoices \par
+WHERE \tab BillingCountry IN ('USA','Germany','Norway','Canada') AND\par
+\tab\tab InvoiceDate between '2010-01-01' AND '2011-01-01' -- strftime() get the YEAR */\par
+\tab\tab\par
+/*8. How many tracks does each album have? Your solution should include Album id and its number of tracks sorted from highest to lowest.\par
+SELECT AlbumId, COUNT(AlbumID) as NoofTrack FROM tracks GROUP BY AlbumId ORDER BY NoofTrack DESC*/\par
+\tab\tab\par
+/*9. Find the album title of the tracks. Your solution should include track name and its album title.\par
+\tab\par
+SELECT \tab tracks.name as TrackName, \par
+\tab\tab albums.Title as AlbumTitle \par
+FROM tracks \par
+JOIN albums ON albums.AlbumId=tracks.AlbumId\tab */\par
+/*10. Find the minimum duration of the track in an album. \par
+Your solution should include track name, album id, album title and duration of the track sorted from highest to lowest.\par
+SELECT \tab tracks.name as TrackName, \par
+\tab\tab albums.Title as AlbumTitle,\par
+\tab\tab MIN(tracks.Milliseconds) as MinDuration\par
+FROM tracks \par
+JOIN albums ON albums.AlbumId=tracks.AlbumId \par
+GROUP BY tracks.AlbumId \par
+ORDER BY MinDuration DESC\par
+*/\par
+/*11. Find the total duration of each album. Your solution should include , \par
+album id, album title and its total duration sorted from highest to lowest.\par
+SELECT \tab\par
+\tab\tab albums.AlbumId,\par
+\tab\tab albums.Title as AlbumTitle,\par
+\tab\tab SUM(tracks.Milliseconds) as TotalDuration\par
+FROM tracks \par
+JOIN albums ON albums.AlbumId=tracks.AlbumId \par
+GROUP BY tracks.AlbumId \par
+ORDER BY TotalDuration DESC\par
+*/\par
+/*12. Based on the previous question, find the albums whose total duration is higher than 70 minutes. \par
+Your solution should include album title and total duration.*/\par
+/*\par
+SELECT \tab\par
+\tab\tab albums.AlbumId,\par
+\tab\tab albums.Title as AlbumTitle,\par
+\tab\tab SUM(tracks.Milliseconds) as TotalDuration\par
+FROM tracks \par
+JOIN albums ON albums.AlbumId=tracks.AlbumId \par
+GROUP BY tracks.AlbumId \par
+HAVING TotalDuration> (70*60*1000)-- 4200000 \par
+ORDER BY TotalDuration DESC\par
+*/\par
+/*\par
+SELECT * \par
+FROM (\par
+\tab\tab SELECT \tab\par
+\tab\tab\tab\tab albums.AlbumId,\par
+\tab\tab\tab\tab albums.Title as AlbumTitle,\par
+\tab\tab\tab\tab SUM(tracks.Milliseconds) as TotalDuration\par
+\tab\tab FROM tracks \par
+\tab\tab JOIN albums ON albums.AlbumId=tracks.AlbumId \par
+\tab\tab GROUP BY tracks.AlbumId \par
+\tab\tab --HAVING TotalDuration> (70*60*1000)-- 4200000 \par
+\tab\tab ORDER BY TotalDuration DESC)\par
+WHERE TotalDuration>(70*60*1000)\par
+*/\f1\lang31\par
+}
+ 
